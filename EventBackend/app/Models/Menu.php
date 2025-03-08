@@ -9,7 +9,7 @@ class Menu extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price'];
+    protected $fillable = ['name', 'price','id_user'];
 
     // Um menu pode ter vários itens associados (relação N:N)
     public function menuItems()

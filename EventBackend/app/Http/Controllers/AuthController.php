@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+
+
+    public function showUserList()
+    {
+        if (Auth::check() && Auth::user()->id_role === 1) {
+            $users = User::paginate(50);
+            return view('pages.admin.list', compact('users'));
+        } else {
+            return redirect()->route('dashboard')->with('error', 'Acesso negado. Você não tem permissão para visualizar a lista de usuários.');
+        }
+    }
+    
     public function roleStore(Request $request)
     {
         $validatedData = $request->validate([
@@ -32,6 +45,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+      
         // Validação dos dados de entrada
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -72,27 +86,8 @@ class AuthController extends Controller
             );
         }
     }
-    public function update(Request $request, $id)
-    {
-        // Encontra o usuário
-        $user = User::findOrFail($id);
-
-        // Validação dos dados de entrada
-        $validated = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'phone' => 'nullable|string|max:255',
-            'email' => 'sometimes|required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:6|confirmed',
-            'address' => 'nullable|string|max:255',
-            'id_img' => 'nullable|exists:images,id', // Imagem opcional, valida se existe na tabela images
-        ]);
-
-        // Atualiza os dados do usuário (sem alterar o id_role)
-        $user->update(array_filter($validated)); // Filtra apenas os campos não nulos
-
-        // Retorna a resposta com o usuário atualizado
-        return response()->json($user);
-    }
+ 
+    
 
     public function login(Request $request)
     {
@@ -120,5 +115,57 @@ class AuthController extends Controller
 
         // Se falhar a autenticação
         return response()->json(['message' => 'Credenciais inválidas'], 401);
+    }  
+    public function update(Request $request, $id)
+    {
+        try {
+            // Encontra o usuário, caso não encontre, retorna erro 404
+            $user = User::findOrFail($id);
+    
+            // Validação dos dados de entrada
+            $validated = $request->validate([
+                'name' => 'sometimes|required|string|max:255',
+                'phone' => 'nullable|string|max:255',
+                'email' => 'sometimes|required|email|unique:users,email,' . $user->id,
+                'password' => 'nullable|string|min:6|confirmed',
+                'address' => 'nullable|string|max:255',
+                'id_img' => 'nullable|exists:images,id', // Imagem opcional, valida se existe na tabela images
+            ]);
+    
+            // Atualiza os dados do usuário (sem alterar o id_role)
+            $user->update(array_filter($validated)); // Filtra apenas os campos não nulos
+    
+            // Verifica se os dados foram realmente atualizados
+            $user->refresh(); // Atualiza o modelo com os dados mais recentes do banco
+    
+            // Retorna a resposta com o usuário atualizado e a mensagem de sucesso
+            return response()->json([
+                'message' => 'User updated successfully',
+                'user' => $user
+            ], 200); // Retorna status 200 e o usuário atualizado
+    
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Se a validação falhar, retorna um erro de validação com as mensagens específicas
+            return response()->json([
+                'error' => 'Validation Error',
+                'messages' => $e->errors()
+            ], 422); // Código de status 422 para erro de validação
+    
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Se o usuário não for encontrado, retorna um erro 404
+            return response()->json([
+                'error' => 'User not found'
+            ], 404);
+    
+        } catch (\Exception $e) {
+            // Captura quaisquer outras exceções e retorna um erro genérico
+            return response()->json([
+                'error' => 'An error occurred',
+                'message' => $e->getMessage()
+            ], 500); // Código de status 500 para erro interno do servidor
+        }
     }
+    
+
+  
 }

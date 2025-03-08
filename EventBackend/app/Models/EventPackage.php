@@ -9,7 +9,7 @@ class EventPackage extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_event_hall', 'id_menu', 'id_decoration', 'total_price'];
+    protected $fillable = ['name','id_event_hall', 'id_menu', 'id_decoration', 'total_price','id_event_type'];
 
     // O pacote de evento pertence a um salão de eventos
     public function eventHall()

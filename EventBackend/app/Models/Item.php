@@ -9,7 +9,7 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'id_img'];
+    protected $fillable = ['name', 'description', 'id_img','id_user'];
 
     // Um item pode ter uma imagem associada
     public function image()

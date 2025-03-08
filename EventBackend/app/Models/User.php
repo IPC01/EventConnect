@@ -48,19 +48,20 @@ class User extends Authenticatable
     ];
 
     // Relação com Role (um usuário pertence a um papel)
-    public function role(): BelongsTo
+    public function role()
     {
         return $this->belongsTo(Role::class, 'id_role');
     }
+    
 
     // Relação com Order (um usuário pode ter vários pedidos)
-    public function orders(): HasMany
+    public function orders()
     {
         return $this->hasMany(Order::class, 'id_user');
     }
 
     // Relação com EventHall (um usuário pode gerenciar vários salões)
-    public function eventHalls(): HasMany
+    public function eventHalls()
     {
         return $this->hasMany(EventHall::class, 'id_user');
     }

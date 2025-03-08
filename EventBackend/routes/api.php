@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
 
 
 /*
@@ -20,13 +21,17 @@ use App\Http\Controllers\AuthController;
 //     return $request->user();
 // });
 
-Route::post('/role', [AuthController::class, 'roleStore']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+//auth e niveis de acesso
 
-// Route::prefix('user')->group(function () {
-    
-// });
-// Route::prefix('company')->group(function () {
 
-// });
+
+//Tipos de eventos
+Route::get('/eventTypes', [EventController::class, 'getTypes']); //
+
+Route::prefix('user')->group(function () {
+  Route::post('/login', [AuthController::class, 'login']);
+  Route::post('/register', [AuthController::class, 'register']);
+  Route::put('/profile/{id}', [AuthController::class, 'update']);
+     
+});
+
