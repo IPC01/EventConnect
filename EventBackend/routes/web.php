@@ -8,6 +8,8 @@ use App\Http\Controllers\EventHallController;
 use App\Http\Controllers\DecorationController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SettingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +72,10 @@ Route::middleware('auth')->group(function () {
     //pacotes
     Route::get('/event-halls/details/{id}', [EventHallController::class, 'eventHallDetails'])->name('event-halls.details');
     Route::post('/packages', [EventHallController::class, 'storePackage'])->name('package.store');
+
+    //definicoes
+    Route::apiResource('settings', SettingController::class);
+
 
 });
 

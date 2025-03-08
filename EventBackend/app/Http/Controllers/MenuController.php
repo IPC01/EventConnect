@@ -13,10 +13,15 @@ class MenuController extends Controller
 {
     public function index()
     {
-        // Lista todos os menus
-        $menus = Menu::all();
-        return view('pages.eventHall.listMenu', compact('menus'));
+        try {
+            // Lista todos os menus associados ao usuário autenticado
+            $menus = Menu::where('id_user', auth()->user()->id)->get();
+            return view('pages.eventHall.listMenu', compact('menus'));
+        } catch (Exception $e) {
+            return back()->with('error', 'Erro ao carregar a lista de menus. Por favor, tente novamente mais tarde.');
+        }
     }
+    
 
     public function create()
     {

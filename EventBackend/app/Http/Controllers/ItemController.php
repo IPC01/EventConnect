@@ -14,8 +14,8 @@ class ItemController extends Controller
 {
     public function index()
     {
-        // Lista todos os itens
-        $items = Item::all();
+        // Lista todos os itens associados ao user autenticado
+        $items = Item::where('id_user', auth()->user()->id)->get();
         return view('pages.eventHall.listItem', compact('items'));
     }
 
