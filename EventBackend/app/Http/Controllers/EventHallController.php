@@ -121,25 +121,38 @@ class EventHallController extends Controller
 
     public function storePackage(Request $request)
     {
+        // Validação dos dados recebidos
         $request->validate([
-            'name'=>'required',
+            'name' => 'required',
             'id_event_hall' => 'required|exists:event_halls,id',
             'id_menu' => 'required|exists:menus,id',
             'id_decoration' => 'required|exists:decorations,id',
             'id_event_type' => 'required|exists:event_types,id',
-            'total_price' => 'required|numeric|min:0',
         ]);
-
-        // Cria o pacote
-        $package = EventPackage::create([
-            'id_event_hall' => $request->id_event_hall,
-            'name' => 'Pacote  ' .$request->name,
-            'id_menu' => $request->id_menu,
-            'id_decoration' => $request->id_decoration,
-            'id_event_type' => $request->id_event_type,
-            'total_price' => $request->total_price,
-        ]);
-
-        return redirect()->route('event-halls.details')->with('success', 'Pacote criado com sucesso!');
+    
+        try {
+            // Buscar os preços dos itens selecionados
+            $eventHallPrice = EventHall::findOrFail($request->id_event_hall)->price;
+            $menuPrice = Menu::findOrFail($request->id_menu)->price;
+            $decorationPrice = Decoration::findOrFail($request->id_decoration)->price;
+    
+            // Calcula o preço total
+            $totalPrice = $eventHallPrice + $menuPrice + $decorationPrice;
+    
+            // Cria o pacote
+            $package = EventPackage::create([
+                'id_event_hall' => $request->id_event_hall,
+                'name' => 'Pacote ' . $request->name,
+                'id_menu' => $request->id_menu,
+                'id_decoration' => $request->id_decoration,
+                'id_event_type' => $request->id_event_type,
+                'total_price' => $totalPrice, // Atribui o valor calculado para o total_price
+            ]);
+    
+            return redirect()->route('event-halls.details')->with('success', 'Pacote criado com sucesso!');
+        } catch (Exception $e) {
+            return back()->with('error', 'Erro ao criar o pacote. Tente novamente mais tarde.');
+        }
     }
+    
 }

@@ -114,6 +114,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+    <!-- Include Footer -->
+ @include('components.footer')
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>  
 @endsection

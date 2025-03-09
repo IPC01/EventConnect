@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-cogs"></i> <!-- Ícone de engrenagem -->
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">EventConnect</div>
     </a>
 
     <!-- Divider -->
@@ -28,9 +28,9 @@
     </div>
 
     <!-- Nav Item - Tipos de Eventos -->
-    <li class="nav-item {{ Request::is('event*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('eventtype*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTypes"
-            aria-expanded="{{ Request::is('event*') ? 'true' : 'false' }}" aria-controls="collapseTypes">
+            aria-expanded="{{ Request::is('eventtype*') ? 'true' : 'false' }}" aria-controls="collapseTypes">
             <i class="fas fa-fw fa-calendar-alt"></i> <!-- Ícone de calendário para eventos -->
             <span>Tipos de eventos</span>
         </a>
@@ -43,17 +43,17 @@
     </li>
 
     <!-- Nav Item - Salões de Eventos -->
-    <li class="nav-item {{ Request::is('eventHall*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('event-halls*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEventHall"
             aria-expanded="{{ Request::is('eventHall*') ? 'true' : 'false' }}" aria-controls="collapseEventHall">
             <i class="fas fa-fw fa-building"></i> <!-- Ícone de prédio (salão) -->
             <span>Saloes de eventos</span>
         </a>
-        <div id="collapseEventHall" class="collapse {{ Request::is('eventHall*') ? 'show' : '' }}" aria-labelledby="headingEventHall" data-parent="#accordionSidebar">
+        <div id="collapseEventHall" class="collapse {{ Request::is('event-halls*') ? 'show' : '' }}" aria-labelledby="headingEventHall" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Saloes de eventos</h6>
-                <a class="collapse-item {{ Request::is('eventHall/create') ? 'active' : '' }}" href="{{ route('eventHall.create') }}">Adicionar</a>
-                <a class="collapse-item {{ Request::is('eventHall/list') ? 'active' : '' }}" href="{{ route('eventHall.list') }}">Listar</a>
+                <a class="collapse-item {{ Request::is('event-halls/create') ? 'active' : '' }}" href="{{ route('eventHall.create') }}">Adicionar</a>
+                <a class="collapse-item {{ Request::is('event-halls/list') ? 'active' : '' }}" href="{{ route('eventHall.list') }}">Listar</a>
 
                 <h6 class="collapse-header">Decorações</h6>
                 <a class="collapse-item {{ Request::is('decoration/create') ? 'active' : '' }}" href="{{ route('decoration.create') }}">Adicionar</a>
@@ -64,7 +64,7 @@
 
                 <h6 class="collapse-header">Menu</h6>
                 <a class="collapse-item {{ Request::is('menu/create') ? 'active' : '' }}" href="{{ route('menu.create') }}">Adicionar</a>
-                <a class="collapse-item {{ Request::is('eventHall/list') ? 'active' : '' }}" href="{{ route('eventHall.list') }}">Listar</a>
+                <a class="collapse-item {{ Request::is('event-halls/list') ? 'active' : '' }}" href="{{ route('eventHall.list') }}">Listar</a>
             </div>
         </div>
     </li>
@@ -124,7 +124,7 @@
     <!-- Sidebar Message -->
     <div class="sidebar-card d-none d-lg-flex">
         <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-        <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+        <p class="text-center mb-2"><strong>EventConnect</strong> is packed with premium features, components, and more!</p>
         <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
     </div>
 
