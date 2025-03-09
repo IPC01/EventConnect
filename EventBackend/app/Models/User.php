@@ -65,4 +65,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(EventHall::class, 'id_user');
     }
+    public function image()
+{
+    return $this->belongsTo(Image::class, 'id_img');
+}
 }

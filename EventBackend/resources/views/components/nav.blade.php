@@ -93,7 +93,7 @@
                     <!-- Verifica se o usuário está autenticado -->
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
                     <img class="img-profile rounded-circle" 
-                        src="{{ auth()->user()->profile_photo_path ? asset('storage/' . auth()->user()->profile_photo_path) : asset('img/undraw_profile.svg') }}">
+                        src="{{ auth()->user()->id_img ? asset('storage/' . auth()->user()->image->url_img) : asset('img/default-avatar.png') }}" class="img-profile rounded-circle" >
                 @else
                     <!-- Caso o usuário não esteja autenticado -->
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuário não autenticado</span>
@@ -103,7 +103,7 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('profile.create')}}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>

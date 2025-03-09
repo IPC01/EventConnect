@@ -33,7 +33,11 @@
 </head>
 
 <body id="page-top">
-
+    @if(session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
     <!-- Page Content -->
     @yield('Content')
 

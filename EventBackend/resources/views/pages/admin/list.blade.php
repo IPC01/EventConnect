@@ -33,7 +33,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Avatar</th>
+                                           
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
@@ -47,11 +47,11 @@
                                         @forelse($users as $user)
                                             <tr>
                                                 <td>
-                                                    <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('images/default-avatar.png') }}"
-                                                        alt="Avatar of {{ $user->name }}" class="rounded-circle"
-                                                        width="50" height="50">
-                                                </td>
-                                                <td>{{ $user->name }}</td>
+                                                    <img src="{{ $user->id_img ? asset('storage/' . $user->image->url_img) : asset('img/undraw_profile.svg') }}"
+                                                         class="rounded-circle"
+                                                        width="30" height="30">
+                                                
+                                                {{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->phone ?? 'N/A' }}</td>
                                                 <td>{{ $user->address ?? 'N/A' }}</td>

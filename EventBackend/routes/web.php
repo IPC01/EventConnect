@@ -23,20 +23,17 @@ use App\Http\Controllers\SettingController;
 */
 // Route::middleware(['auth', 'acess'])->group(function () {
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
+
+    Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+
 
     //tipos de evento
     Route::post('registerType', [EventController::class, 'storeType']);

@@ -20,7 +20,7 @@ class DecorationController extends Controller
     public function index()
     {
         try {
-            $decorations = Decoration::where('user_id', auth()->user()->id)->get();
+            $decorations = Decoration::where('id_user', auth()->user()->id)->get();
             return view('pages.eventHall.listDecoration', compact('decorations'));
         } catch (Exception $e) {
             return back()->with('error', 'Erro ao carregar a lista de decorações.');

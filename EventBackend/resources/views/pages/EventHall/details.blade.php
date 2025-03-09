@@ -148,17 +148,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="total_price" class="form-label">Preço Total (R$) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control @error('total_price') is-invalid @enderror" 
-                                           id="total_price" name="total_price" value="{{ old('total_price') }}" 
-                                           placeholder="0.00" required min="0" step="0.01">
-                                    @error('total_price')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
+                           
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
