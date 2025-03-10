@@ -50,7 +50,7 @@
                                                 <td>{{ $package->name }}</td>
                                                 <td>R$ {{ number_format($package->total_price, 2, ',', '.') }}</td>
                                                 <td>
-                                                    <a href="{{ route('event-halls.details', $package->id) }}" class="btn btn-sm btn-info">Ver</a>
+                                                    <a href="{{ route('package.details', $package->id) }}" class="btn btn-sm btn-info">Ver</a>
                                                 </td>
                                             </tr>
                                         @endforeach

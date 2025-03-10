@@ -11,10 +11,11 @@ class MenuItem extends Model
     protected $fillable = ['id_menu', 'id_item'];
 
     // Um MenuItem pertence a um menu
-    public function menu()
+    public function menuItems()
     {
-        return $this->belongsTo(Menu::class, 'id_menu');
+        return $this->hasMany(MenuItem::class, 'id_menu');
     }
+    
 
     // Um MenuItem pertence a um item
     public function item()

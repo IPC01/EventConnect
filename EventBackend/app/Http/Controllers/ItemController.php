@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Image;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class ItemController extends Controller
     {
         // Lista todos os itens associados ao user autenticado
         $items = Item::where('id_user', auth()->user()->id)->get();
-        return view('pages.eventHall.listItem', compact('items'));
+        $categories=Category::all();
+        return view('pages.eventHall.listItem', compact('items','categories'));
     }
 
    
@@ -27,6 +29,7 @@ class ItemController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'id_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required|exists:categories,id', // Valida que o category_id seja válido
         ]);
     
         DB::beginTransaction(); // Inicia a transação do banco de dados
@@ -37,6 +40,7 @@ class ItemController extends Controller
                 'name' => $request->name,
                 'id_user' => Auth::id(), 
                 'description' => $request->description,
+                'id_category'=>$request->category_id
             ]);
     
             // Verifica se a imagem foi enviada

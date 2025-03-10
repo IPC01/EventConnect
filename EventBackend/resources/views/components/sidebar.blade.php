@@ -32,12 +32,14 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTypes"
             aria-expanded="{{ Request::is('eventtype*') ? 'true' : 'false' }}" aria-controls="collapseTypes">
             <i class="fas fa-fw fa-calendar-alt"></i> <!-- Ícone de calendário para eventos -->
-            <span>Tipos de eventos</span>
+            <span>Definicoes de eventos</span>
         </a>
         <div id="collapseTypes" class="collapse {{ Request::is('event*') ? 'show' : '' }}" aria-labelledby="headingTypes" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tipos de eventos</h6>
                 <a class="collapse-item {{ Request::is('event/list') ? 'active' : '' }}" href="{{ route('event.list') }}">Listar</a>
+                <h6 class="collapse-header">Categorias de pratos</h6>
+                <a class="collapse-item {{ Request::is('categories/list') ? 'active' : '' }}" href="{{ route('category.list') }}">Listar</a>
             </div>
         </div>
     </li>

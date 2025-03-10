@@ -17,4 +17,9 @@ class Decoration extends Model {
         'base_img',
         'id_user'
     ];
+
+    public function images()
+    {
+        return $this->belongsToMany(Image::class,'decoration_imgs', 'id_decoration','id_img'); // Relacionamento um-para-muitos
+    }
 }

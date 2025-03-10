@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Category;
 use App\Models\EventType;
+use Illuminate\Validation\Rule;
 
 class EventController extends Controller
 {
@@ -151,6 +153,32 @@ class EventController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+
+    public function showCategories(){
+        $categories=Category::paginate(50);
+        return view('pages.admin.categories',compact('categories'));
+    }
+    public function storeCategory(Request $request)
+    {
+        // Validação da entrada
+        $validatedData = $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('categories') // Garante que o nome da categoria seja único
+            ],
+        ]);
+
+        // Criando a nova categoria com os dados validados
+        $category = new Category();
+        $category->name = $validatedData['name'];
+        $category->save(); // Salva a categoria no banco de dados
+
+        // Retorna uma resposta com a categoria criada
+        return redirect()->route('category.list')->with('success', 'Categoria criada com sucesso!');
     }
 
 }

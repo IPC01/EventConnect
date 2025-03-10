@@ -12,10 +12,11 @@ class Menu extends Model
     protected $fillable = ['name', 'price','id_user'];
 
     // Um menu pode ter vários itens associados (relação N:N)
-    public function menuItems()
+    public function items()
     {
-        return $this->hasMany(MenuItem::class, 'id_menu');
+        return $this->belongsToMany(Item::class, 'menu_items', 'id_menu', 'id_item');
     }
+    
 
     // Um menu pode estar em vários pacotes de eventos
     public function eventPackages()

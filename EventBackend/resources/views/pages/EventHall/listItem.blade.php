@@ -32,21 +32,26 @@
                                             <th>Nome</th>
                                             <th>Descrição</th>
                                             <th>Imagem</th>
+                                            <th>Categoria</th> <!-- Adicionada a coluna de categoria -->
                                             <th>Ações</th>
                                         </tr>
                                     </thead>
-
+                                
                                     <tbody>
                                         @forelse($items as $item)
                                             <tr>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->description }}</td>
-                                                <td>
+                                                <td class="text-center">
                                                     @if($item->id_img)
-                                                        <img src="{{ asset('storage/images/' . $item->id_img) }}" alt="Item Image" width="50" height="50">
+                                                        <img src="{{ asset('storage/' . $item->image->url_img) }}" alt="Item Image" width="50" height="50">
                                                     @else
                                                         <span>No image</span>
                                                     @endif
+                                                </td>
+                                                <td>
+                                                    <!-- Exibe o nome da categoria -->
+                                                    {{ $item->category ? $item->category->name : 'Sem Categoria' }}
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group">
@@ -69,11 +74,12 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="4" class="text-center">Nenhum item encontrado</td>
+                                                <td colspan="5" class="text-center">Nenhum item encontrado</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
+                                
                             </div>
                         </div>
                     </div>
@@ -112,6 +118,15 @@
                             <label for="id_img">Imagem</label>
                             <input type="file" name="id_img" id="id_img" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label for="category_id">Categoria</label>
+                            <select name="category_id" id="category_id" class="form-control" required>
+                                <option value="" disabled selected>Selecione uma Categoria</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -121,6 +136,49 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="itemModalLabel">Cadastrar Novo Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descrição</label>
+                            <textarea name="description" id="description" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_img">Imagem</label>
+                            <input type="file" name="id_img" id="id_img" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="category_id">Categoria</label>
+                            <select name="category_id" id="category_id" class="form-control" required>
+                                <option value="" disabled selected>Selecione uma Categoria</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        
 
 @endsection
 

@@ -27,6 +27,7 @@ use App\Http\Controllers\SettingController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
+    Route::get('/', [ProfileController::class, 'index']);
 
     Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,7 +44,9 @@ Route::middleware('auth')->group(function () {
 
     //tipos de evento
     Route::get('event/list', [EventController::class, 'showEventType'])->name('event.list');
+    Route::get('categories/list', [EventController::class, 'showCategories'])->name('category.list');
     Route::post('registerTypes', [EventController::class, 'storeType'])->name('event.add');
+    Route::post('registerCategory', [EventController::class, 'storeCategory'])->name('category.add');
     Route::put('editType/{id}', [EventController::class, 'updateType'])->name('event.update');
     Route::get('eventType/{id}', [EventController::class, 'getType'])->name('event.type');
     Route::get('/eventTypes', [EventController::class, 'getTypes'])->name('event.types');
@@ -69,6 +72,8 @@ Route::middleware('auth')->group(function () {
     //pacotes
     Route::get('/event-halls/details/{id}', [EventHallController::class, 'eventHallDetails'])->name('event-halls.details');
     Route::post('/packages', [EventHallController::class, 'storePackage'])->name('package.store');
+    Route::get('/package/{id}', [EventHallController::class, 'showPackageDetails'])->name('package.details');
+
 
     //definicoes
     Route::apiResource('settings', SettingController::class);
