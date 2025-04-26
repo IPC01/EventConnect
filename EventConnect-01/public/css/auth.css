@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.bg-gradient {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+}
+
+.login-card {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.form-input:focus {
+    border-color: #8B5CF6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.shape1 {
+    background: linear-gradient(45deg, #EC4899, #8B5CF6);
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    z-index: -1;
+    animation: pulse 8s ease-in-out infinite alternate;
+}
+
+.shape2 {
+    background: linear-gradient(45deg, #3B82F6, #10B981);
+    border-radius: 60% 40% 70% 30% / 30% 70% 30% 70%;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    bottom: -200px;
+    left: -200px;
+    z-index: -1;
+    animation: morph 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+@keyframes morph {
+    0% {
+        border-radius: 60% 40% 70% 30% / 30% 70% 30% 70%;
+    }
+    100% {
+        border-radius: 30% 70% 40% 60% / 70% 30% 60% 40%;
+    }
+}

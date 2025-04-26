@@ -217,190 +217,58 @@
                                     </div>
                                     
                                     <!-- Conteúdo do Menu -->
-                                    <div class="tab-pane fade" id="menu" role="tabpanel" aria-labelledby="menu-tab">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <h3 class="h4 mb-3">Gastronomia de Excelência</h3>
-                                                <p>Nossa equipe de chefs renomados preparará um cardápio exclusivo para seu evento, com ingredientes selecionados e apresentação impecável. Oferecemos opções para todos os gostos e restrições alimentares.</p>
-                                                
-                                                <div class="menu-categories mt-4">
-                                                    <div class="accordion" id="menuAccordion">
-                                                        <!-- Entradas -->
-                                                        {{$package->menu}} ...
-                                                        <div class="accordion-item border-0 mb-3 shadow-sm">
-                                                            <h2 class="accordion-header" id="entradasHeading">
-                                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#entradasCollapse" aria-expanded="true" aria-controls="entradasCollapse">
-                                                                    <i class="fas fa-seedling me-2 text-success"></i>
-                                                                </button>
-                                                            </h2>
-                                                            <div id="entradasCollapse" class="accordion-collapse collapse show" aria-labelledby="entradasHeading">
-                                                                <div class="accordion-body">
-                                                                    <ul class="list-group list-group-flush">
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Canapés de salmão defumado com cream cheese</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Bruschettas de tomate e manjericão</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Carpaccio de carne com molho de alcaparras</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Mini quiches de queijo brie e cogumelos</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Espetinhos de camarão grelhado com molho cítrico</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
+                                    <div class="tab-pane fade show active" id="menu" role="tabpanel" aria-labelledby="menu-tab">
+                                        <div class="container py-4">
+                                            <div class="row mb-4">
+                                                <div class="col-lg-12">
+                                                    <h2 class="text-center mb-3">{{ $package->menu->name }}</h2>
+                                                    <p class="text-center lead">{{ $package->menu->price }}</p>
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="row">
+                                                @php
+                                                    use App\Models\Category;
+                                    
+                                                    $categories = [];
+                                    
+                                                    // Agrupar itens por categoria
+                                                    foreach ($package->menu->items as $item) {
+                                                        $categoryName = is_object($item->category) ? $item->category->name : 'Sem Categoria';
+                                                        if (!isset($categories[$categoryName])) {
+                                                            $categories[$categoryName] = [];
+                                                        }
+                                                        $categories[$categoryName][] = $item;
+                                                    }
+                                                @endphp
+                                    
+                                                @foreach ($categories as $categoryName => $items)
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card h-100 shadow-sm">
+                                                            <div class="card-header bg-light">
+                                                                <h3 class="h5 mb-0">
+                                                                    <i class="fas fa-circle me-2 text-primary"></i>{{ $categoryName }}
+                                                                </h3>
                                                             </div>
-                                                        </div>
-                                                        
-                                                        <!-- Pratos Principais -->
-                                                        <div class="accordion-item border-0 mb-3 shadow-sm">
-                                                            <h2 class="accordion-header" id="pratosPrincipaisHeading">
-                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pratosPrincipaisCollapse" aria-expanded="false" aria-controls="pratosPrincipaisCollapse">
-                                                                    <i class="fas fa-utensils me-2 text-danger"></i>Pratos Principais (escolha 3 opções)
-                                                                </button>
-                                                            </h2>
-                                                            <div id="pratosPrincipaisCollapse" class="accordion-collapse collapse" aria-labelledby="pratosPrincipaisHeading">
-                                                                <div class="accordion-body">
-                                                                    <ul class="list-group list-group-flush">
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Medalhão de filé mignon ao molho de vinho tinto</span>
-                                                                            </div>
+                                                            <div class="card-body">
+                                                                <ul class="list-group list-group-flush">
+                                                                    @foreach ($items as $item)
+                                                                        <li class="list-group-item border-0">
+                                                                            <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>{{ $item->name }}
                                                                         </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Salmão grelhado com crosta de ervas</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Risoto de cogumelos selvagens</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Escalope de frango recheado com queijo e espinafre</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Ravioli de queijos nobres ao molho de tomate fresco</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
+                                                                    @endforeach
+                                                                </ul>
                                                             </div>
-                                                        </div>
-                                                        
-                                                        <!-- Sobremesas -->
-                                                        <div class="accordion-item border-0 mb-3 shadow-sm">
-                                                            <h2 class="accordion-header" id="sobremesasHeading">
-                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sobremesasCollapse" aria-expanded="false" aria-controls="sobremesasCollapse">
-                                                                    <i class="fas fa-ice-cream me-2 text-warning"></i>Sobremesas (escolha 3 opções)
-                                                                </button>
-                                                            </h2>
-                                                            <div id="sobremesasCollapse" class="accordion-collapse collapse" aria-labelledby="sobremesasHeading">
-                                                                <div class="accordion-body">
-                                                                    <ul class="list-group list-group-flush">
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Petit gateau de chocolate com sorvete de baunilha</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Cheesecake de frutas vermelhas</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Tiramisu tradicional</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Profiteroles com calda de chocolate</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Mousse de maracujá com calda de frutas vermelhas</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <!-- Bebidas -->
-                                                        <div class="accordion-item border-0 shadow-sm">
-                                                            <h2 class="accordion-header" id="bebidasHeading">
-                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bebidasCollapse" aria-expanded="false" aria-controls="bebidasCollapse">
-                                                                    <i class="fas fa-glass-cheers me-2 text-info"></i>Bebidas (inclusas no pacote)
-                                                                </button>
-                                                            </h2>
-                                                            <div id="bebidasCollapse" class="accordion-collapse collapse" aria-labelledby="bebidasHeading">
-                                                                <div class="accordion-body">
-                                                                    <ul class="list-group list-group-flush">
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Água mineral com e sem gás</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Refrigerantes tradicionais e zero</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Sucos naturais (3 sabores)</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Cerveja premium (2 opções)</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Vinho tinto e branco selecionados</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Espumante para brinde</span>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="list-group-item border-0 ps-0">
-                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                <span><i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>Serviço de bar com 2 opções de drinks</span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                @include('components.footer')
-
+                                                @endforeach
                                             </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
                                             <!-- End of Content Wrapper -->
-                                        
+                                            @include('components.footer')
+
                                         </div>  
-                                        @endsection
+@endsection

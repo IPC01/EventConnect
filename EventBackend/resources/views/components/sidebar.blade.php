@@ -57,16 +57,12 @@
                 <a class="collapse-item {{ Request::is('event-halls/create') ? 'active' : '' }}" href="{{ route('eventHall.create') }}">Adicionar</a>
                 <a class="collapse-item {{ Request::is('event-halls/list') ? 'active' : '' }}" href="{{ route('eventHall.list') }}">Listar</a>
 
-                <h6 class="collapse-header">Decorações</h6>
-                <a class="collapse-item {{ Request::is('decoration/create') ? 'active' : '' }}" href="{{ route('decoration.create') }}">Adicionar</a>
-                <a class="collapse-item {{ Request::is('decoration/index') ? 'active' : '' }}" href="{{ route('decoration.index') }}">Listar</a>
+               
+                <a class="collapse-item  {{ Request::is('decoration/index') ? 'active' : '' }}" href="{{ route('decoration.index') }}">Decorações</a>
 
-                <h6 class="collapse-header">Pratos</h6>
-                <a class="collapse-item {{ Request::is('item/index') ? 'active' : '' }}" href="{{ route('item.index') }}">Listar</a>
+                <a class="collapse-item {{ Request::is('item/index') ? 'active' : '' }}" href="{{ route('item.index') }}">Pratos</a>
 
-                <h6 class="collapse-header">Menu</h6>
-                <a class="collapse-item {{ Request::is('menu/create') ? 'active' : '' }}" href="{{ route('menu.create') }}">Adicionar</a>
-                <a class="collapse-item {{ Request::is('event-halls/list') ? 'active' : '' }}" href="{{ route('eventHall.list') }}">Listar</a>
+                <a class="collapse-item {{ Request::is('event-halls/list') ? 'active' : '' }}" href="{{ route('menu.index') }}">Menu</a>
             </div>
         </div>
     </li>

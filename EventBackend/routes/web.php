@@ -27,7 +27,6 @@ use App\Http\Controllers\SettingController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
-    Route::get('/', [ProfileController::class, 'index']);
 
     Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -78,8 +77,17 @@ Route::middleware('auth')->group(function () {
     //definicoes
     Route::apiResource('settings', SettingController::class);
 
+ 
 
 });
+Route::get('teste', function () {
+    return view('pages.teste');
+});
+Route::get('/', function () {
+    return view('user.pages.home');
+});
+
+
 
 require __DIR__ . '/auth.php';
 // });

@@ -84,7 +84,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="name" class="form-label">Nome do pacote <span class="text-danger">*</span></label>
-                                            <input type="text" name="name">
+                                            <input class="form-control" type="text" name="name">
                                     
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
