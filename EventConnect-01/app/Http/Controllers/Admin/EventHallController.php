@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\EventHall;
+use App\Http\Controllers\Controller; 
 use App\Models\EventPackage;
 use App\Models\Menu;
 use App\Models\Item;
@@ -20,9 +21,9 @@ class EventHallController extends Controller
      */
     public function index()
     {
-        $eventHalls = EventHall::where('id_user', auth()->id())->get();
+        $halls = EventHall::where('id_user', auth()->id())->get();
     
-        return view('pages.eventHall.list', compact('eventHalls'));
+        return view('admin.pages.halls.index', compact('halls'));
     }
     
 
@@ -31,7 +32,7 @@ class EventHallController extends Controller
      */
     public function create()
     {
-        return view('pages.eventHall.register');
+        return view('admin.pages.halls.create');
     }
 
     /**
@@ -100,7 +101,7 @@ class EventHallController extends Controller
             DB::commit();
     
             // Redirect to the event hall list with a success message
-            return redirect()->route('eventHall.list')->with('success', 'Salão de evento cadastrado com sucesso!');
+            return redirect()->route('admin.hall.index')->with('success', 'Salão de evento cadastrado com sucesso!');
         } catch (\Exception $e) {
             // Rollback the transaction in case of an error
             DB::rollback();
@@ -116,8 +117,8 @@ class EventHallController extends Controller
      */
     public function edit($id)
     {
-        $eventHall = EventHall::findOrFail($id);
-        return view('eventHalls.edit', compact('eventHall'));
+        $hall = EventHall::findOrFail($id);
+        return view('admin.pages.halls.edit', compact('hall'));
     }
 
     /**
@@ -136,7 +137,7 @@ class EventHallController extends Controller
             $eventHall = EventHall::findOrFail($id);
             $eventHall->update($request->all());
 
-            return redirect()->route('eventHall.index')->with('success', 'Salão de evento atualizado com sucesso!');
+            return redirect()->route('admin.Hall.index')->with('success', 'Salão de evento atualizado com sucesso!');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Erro ao atualizar salão de evento.']);
         }

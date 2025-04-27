@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -13,7 +14,7 @@ class SettingController extends Controller
     public function index()
     {
         $settings=Setting::first();
-        return view('pages.admin.settings',compact('settings'));
+        return view('admin.pages.settings',compact('settings'));
     }
 
     // Criar novo registro

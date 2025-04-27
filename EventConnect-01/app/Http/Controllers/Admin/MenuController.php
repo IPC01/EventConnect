@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Menu;
+use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class MenuController extends Controller
             // Lista todos os menus associados ao usuário autenticado
             $menus = Menu::where('id_user', auth()->user()->id)->get();
             $items = Item::where('id_user', auth()->user()->id)->get(); 
-            return view('pages.eventHall.listMenu', compact('menus','items'));
+            return view('admin.pages.menu.index', compact('menus','items'));
         } catch (Exception $e) {
             return back()->with('error', 'Erro ao carregar a lista de menus. Por favor, tente novamente mais tarde.');
         }
@@ -28,7 +29,7 @@ class MenuController extends Controller
     {
         // Exibe o formulário para criar um novo menu
         $items = Item::all(); // Todos os itens disponíveis para adicionar ao menu
-        return view('pages.eventHall.registerMenu', compact('items'));
+        return view('admin.pages.menu.create', compact('items'));
     }
 
     public function store(Request $request)
@@ -55,7 +56,7 @@ class MenuController extends Controller
             ]);
         }
 
-        return redirect()->route('menu.index')->with('success', 'Menu criado com sucesso!');
+        return redirect()->route('admin.menus.index')->with('success', 'Menu criado com sucesso!');
     }
 
     public function edit($id)
@@ -64,7 +65,7 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
         $items = Item::all(); // Todos os itens disponíveis
         $selectedItems = $menu->items()->pluck('id_item')->toArray(); // Itens selecionados para o menu
-        return view('menu.edit', compact('menu', 'items', 'selectedItems'));
+        return view('admin.pages.menu.edit', compact('menu', 'items', 'selectedItems'));
     }
 
     public function update(Request $request, $id)
@@ -92,7 +93,7 @@ class MenuController extends Controller
             ]);
         }
 
-        return redirect()->route('menu.index')->with('success', 'Menu atualizado com sucesso!');
+        return redirect()->route('admin.menus.index')->with('success', 'Menu atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -101,6 +102,6 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
         $menu->delete();
 
-        return redirect()->route('menu.index')->with('success', 'Menu excluído com sucesso!');
+        return redirect()->route('admin.menus.index')->with('success', 'Menu excluído com sucesso!');
     }
 }

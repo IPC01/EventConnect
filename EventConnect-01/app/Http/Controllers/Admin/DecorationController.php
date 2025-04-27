@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Decoration;
 use App\Models\Image;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class DecorationController extends Controller
     {
         try {
             $decorations = Decoration::where('id_user', auth()->user()->id)->get();
-            return view('pages.eventHall.listDecoration', compact('decorations'));
+            return view('admin.pages.decoration.index', compact('decorations'));
         } catch (Exception $e) {
             return back()->with('error', 'Erro ao carregar a lista de decorações.');
         }
@@ -32,7 +33,7 @@ class DecorationController extends Controller
      */
     public function create()
     {
-        return view('pages.eventHall.registerDecoration');
+        return view('admin.pages.decoration.create');
     }
 
     /**
@@ -96,7 +97,7 @@ class DecorationController extends Controller
      
              DB::commit();
      
-             return redirect()->route('decoration.index')->with('success', 'Decoração criada com sucesso!');
+             return redirect()->route('admin.decorations.index')->with('success', 'Decoração criada com sucesso!');
          } catch (\Exception $e) {
              DB::rollBack();
              return back()->withErrors('Erro ao criar decoração: ' . $e->getMessage());
@@ -112,7 +113,7 @@ class DecorationController extends Controller
     {
         try {
             $decoration = Decoration::findOrFail($id);
-            return view('pages.decoration.show', compact('decoration'));
+            return view('admin.pages.decorationshow', compact('decoration'));
         } catch (Exception $e) {
             return back()->with('error', 'Decoração não encontrada.');
         }
@@ -125,7 +126,7 @@ class DecorationController extends Controller
     {
         try {
             $decoration = Decoration::findOrFail($id);
-            return view('pages.decoration.edit', compact('decoration'));
+            return view('admin.pages.decoration.edit', compact('decoration'));
         } catch (Exception $e) {
             return back()->with('error', 'Erro ao carregar a decoração para edição.');
         }
@@ -156,7 +157,7 @@ class DecorationController extends Controller
 
             $decoration->save();
 
-            return redirect()->route('decoration.index')->with('success', 'Decoração atualizada com sucesso!');
+            return redirect()->route('admin.decorations.index')->with('success', 'Decoração atualizada com sucesso!');
         } catch (Exception $e) {
             return back()->with('error', 'Erro ao atualizar a decoração.');
         }
@@ -171,7 +172,7 @@ class DecorationController extends Controller
             $decoration = Decoration::findOrFail($id);
             $decoration->delete();
 
-            return redirect()->route('decoration.index')->with('success', 'Decoração excluída com sucesso!');
+            return redirect()->route('admin.decoration.index')->with('success', 'Decoração excluída com sucesso!');
         } catch (Exception $e) {
             return back()->with('error', 'Erro ao excluir a decoração.');
         }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Image;
 use App\Models\Category;
@@ -16,9 +17,14 @@ class ItemController extends Controller
     public function index()
     {
         // Lista todos os itens associados ao user autenticado
-        $items = Item::where('id_user', auth()->user()->id)->get();
+        $menuItems = Item::where('id_user', auth()->user()->id)->get();
         $categories=Category::all();
-        return view('pages.eventHall.listItem', compact('items','categories'));
+        return view('admin.pages.items.index', compact('menuItems','categories'));
+    }
+    public function create()
+    {
+        $categories=Category::all();
+        return view('admin.pages.items.create', compact('categories'));
     }
 
    
@@ -48,11 +54,12 @@ class ItemController extends Controller
                 // Armazena a imagem no diretório public/images e recupera o nome do arquivo
                 $image = $request->file('id_img');
                 $imageName = 'item_' . time() . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('public/images', $imageName);
+                $path = $image->store('images', 'public');
+                // $image->storeAs('public/images', $imageName);
     
                 // Cria a imagem na tabela `images` e recupera o ID
                 $imageRecord = Image::create([
-                    'url_img' => 'images/' . $imageName,
+                    'url_img' =>  $path
                 ]);
     
                 // Associa o ID da imagem ao item
@@ -63,7 +70,7 @@ class ItemController extends Controller
     
             DB::commit(); // Confirma a transação
     
-            return redirect()->route('item.index')->with('success', 'Item criado com sucesso!');
+            return redirect()->route('admin.items.index')->with('success', 'Item criado com sucesso!');
         } catch (\Exception $e) {
             DB::rollBack(); // Se ocorrer algum erro, desfaz a transação
     
@@ -76,7 +83,9 @@ class ItemController extends Controller
     {
         // Exibe o formulário para editar um item existente
         $item = Item::findOrFail($id);
-        return view('item.edit', compact('item'));
+        $categories=Category::all();
+
+        return view('admin.pages.items.edit', compact('item','categories'));
     }
 
     public function update(Request $request, $id)
@@ -88,15 +97,30 @@ class ItemController extends Controller
             'id_img' => 'nullable|image',
         ]);
 
+        if ($request->hasFile('id_img')) {
+            // Armazena a imagem no diretório public/images e recupera o nome do arquivo
+            $image = $request->file('id_img');
+            $imageName = 'item_' . time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->store('images', 'public');
+            // $image->storeAs('public/images', $imageName);
+
+            // Cria a imagem na tabela `images` e recupera o ID
+            $imageRecord = Image::create([
+                'url_img' =>  $path
+            ]);
+
+       
+        }
+
         // Atualiza o item
         $item = Item::findOrFail($id);
         $item->update([
             'name' => $request->name,
             'description' => $request->description,
-            'id_img' => $request->file('id_img') ? $request->file('id_img')->store('images') : $item->id_img,
+            'id_img' => $imageRecord->id
         ]);
 
-        return redirect()->route('item.index')->with('success', 'Item atualizado com sucesso!');
+        return redirect()->route('admin.items.index')->with('success', 'Item atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -105,6 +129,6 @@ class ItemController extends Controller
         $item = Item::findOrFail($id);
         $item->delete();
 
-        return redirect()->route('item.index')->with('success', 'Item excluído com sucesso!');
+        return redirect()->route('admin.items.index')->with('success', 'Item excluído com sucesso!');
     }
 }
