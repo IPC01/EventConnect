@@ -5,6 +5,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\EventHallController;
 use App\Http\Controllers\Admin\DecorationController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ItemController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     //items de menu
     Route::resource('menus', MenuController::class);
+
+    //configuracoes
+    Route::resource('settings', SettingController::class);
 
     
   

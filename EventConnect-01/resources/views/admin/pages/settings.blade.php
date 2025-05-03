@@ -21,7 +21,7 @@
                     <h3 class="text-lg font-medium text-gray-700 mb-4">Taxa de Cancelamento de Início</h3>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Cancelamento Inicial (%) <span class="text-red-500">*</span></label>
-                        <input type="number" name="cancel_start_fee" value="{{ old('cancel_start_fee', isset($settings) ? $settings->cancel_start_fee : '') }}" required min="0"
+                        <input type="number" name="cancel_start_fee" value="{{ old('cancel_start_fee', isset($settings) ? $settings->cancel_start_fee : '') }}" required 
                             class="w-full border-gray-300 focus:ring-cyan-500 focus:border-cyan-500 rounded-md shadow-sm p-3">
                     </div>
                 </div>

@@ -1,11 +1,7 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="logo-area">
-      <svg width="32" height="32" viewBox="0 0 100 100">
-        <circle cx="35" cy="40" r="15" fill="#0BC4E2" />
-        <circle cx="55" cy="40" r="15" fill="#FF56B1" />
-        <path d="M45 60 L60 45 L75 60" stroke="#FFD700" stroke-width="8" fill="none" stroke-linecap="round" />
-      </svg>
+     <img src="{{asset('favicon.ico')}}" alt="" srcset="">
       <div class="logo-text">
         <span class="logo-text-blue">Event</span><span class="logo-text-purple">Connect</span>
       </div>
@@ -66,7 +62,7 @@
         <span>Perfil</span>
       </a>
     
-      <a href="#" class="menu-item">
+      <a href="{{route('admin.settings.index')}}" class="menu-item">
         <i class="fas fa-cogs menu-icon"></i>
         <span>Configurações</span>
       </a>

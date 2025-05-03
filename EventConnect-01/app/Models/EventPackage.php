@@ -31,6 +31,6 @@ class EventPackage extends Model
 
     public function reservations(): HasMany
     {
-        return $this->hasMany(Reserve::class, 'id_package');
+        return $this->hasMany(Reserve::class, 'id_package');  
     }
 }

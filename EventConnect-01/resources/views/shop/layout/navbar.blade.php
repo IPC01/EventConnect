@@ -3,9 +3,12 @@
     <div class="container flex justify-between items-center py-3">
         <div class="flex items-center">
             <div class="flex items-center">
-                <a href="/">
-                   <img src="{{asset('logotipo/logo1.png')}}" alt="" srcset="" width="50" height="50">
-                </a>
+               
+                    <img src="{{asset('favicon.ico')}}" alt="" srcset="">
+                     <div class="logo-text">
+                       <h1><span class="logo-text-blue">Event</span><span class="logo-text-purple">Connect</span></h1>
+                     </div>
+               
             </div>
         </div>
 

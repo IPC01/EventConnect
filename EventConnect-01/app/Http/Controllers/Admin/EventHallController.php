@@ -157,7 +157,7 @@ class EventHallController extends Controller
             return back()->withErrors(['error' => 'Erro ao excluir salão de evento.']);
         }
     }
-    public function eventHallDetails($id)
+    public function show($id)
     {
      
         // Recupera o EventHall relacionado ao id_user do usuário autenticado
@@ -169,7 +169,7 @@ class EventHallController extends Controller
         $decorations = Decoration::all(); // Recupera todas as decorações
         $eventTypes = EventType::all(); // Recupera todos os tipos de evento
 
-        return view('pages.eventHall.details', compact('eventHall', 'menus', 'decorations', 'eventTypes','packages'));
+        return view('admin.pages.packages.index', compact('eventHall', 'menus', 'decorations', 'eventTypes','packages'));
     }
 
     public function storePackage(Request $request)

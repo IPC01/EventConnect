@@ -78,7 +78,7 @@
                             <th>Preço</th>
                             <th>Email</th>
                             <th>Telefone</th>
-                            <th>Status</th>
+                            <th>Pacotes</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -92,12 +92,11 @@
                                 <td>{{ $hall->email }}</td>
                                 <td>{{ $hall->phone }}</td>
                                 <td>
-                                    @php
-                                        $statusColor = $hall->status == 'active' ? 'green' : 'red';
-                                    @endphp
-                                    <span class="status-badge" style="background-color: {{ $statusColor }};">
-                                        {{ ucfirst($hall->status) }}
-                                    </span>
+                                    <a href="{{ route('admin.hall.show', $hall->id) }}" class="action-btn">
+                                        <i class="fas fa-eye text-purple-600"></i>
+                                    </a>
+                                    
+                                   
                                 </td>
                                 <td>
                                     <div style="display: flex; gap: 0.5rem;">
