@@ -8,7 +8,9 @@ use App\Models\Item;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Pagination\LengthAwarePaginator;
+    use Illuminate\Support\Collection;
+    
 
 class MenuController extends Controller
 {
@@ -31,8 +33,71 @@ class MenuController extends Controller
         $items = Item::all(); // Todos os itens disponíveis para adicionar ao menu
         return view('admin.pages.menu.create', compact('items'));
     }
+    
+    public function show(Request $request, $id)
+    {
+        $menu = Menu::with('items.category')->findOrFail($id);
+    
+        // Todos os itens do menu (já carregados)
+        $items = $menu->items;
+    
+        // Filtros manuais na Collection
+        if ($request->filled('search')) {
+            $items = $items->filter(function ($item) use ($request) {
+                return stripos($item->name, $request->search) !== false;
+            });
+        }
+    
+        if ($request->filled('status')) {
+            $items = $items->filter(function ($item) use ($request) {
+                return $item->status === $request->status;
+            });
+        }
+    
+        if ($request->filled('category_id')) {
+            $items = $items->filter(function ($item) use ($request) {
+                return $item->category_id == $request->category_id;
+            });
+        }
+    
+        // Ordenação
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'name_asc':
+                    $items = $items->sortBy('name');
+                    break;
+                case 'name_desc':
+                    $items = $items->sortByDesc('name');
+                    break;
+                case 'price_high':
+                    $items = $items->sortByDesc('price');
+                    break;
+                case 'price_low':
+                    $items = $items->sortBy('price');
+                    break;
+            }
+        }
+    
+        // Paginação manual
+        $perPage = 8;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $itemsPaginated = new LengthAwarePaginator(
+            $items->slice(($currentPage - 1) * $perPage, $perPage)->values(),
+            $items->count(),
+            $perPage,
+            $currentPage,
+            ['path' => url()->current(), 'query' => $request->query()]
+        );
+    
+        return view('admin.pages.items.show', [
+            'items' => $itemsPaginated,
+            'menu' => $menu
+        ]);
+    
+    }
 
-    public function store(Request $request)
+    
+        public function store(Request $request)
     {
         // Validação
         $request->validate([
