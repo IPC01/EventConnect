@@ -8,12 +8,15 @@ use App\Http\Controllers\Admin\DecorationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\PackageController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ShopController::class, 'index'])->name('shop');
-Route::get('/index', function () {
-    return view('admin.pages.index');
-});
+Route::get('/galery', [ShopController::class, 'galery'])->name('shop.galery');
+Route::get('/package', [ShopController::class, 'package'])->name('shop.package');
+Route::get('/package/details', [ShopController::class, 'packagedetails'])->name('shop.package.details');
+
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -40,6 +43,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     //configuracoes
     Route::resource('settings', SettingController::class);
+
+    //pacotes
+    Route::resource('packages', PackageController::class);
 
     
   

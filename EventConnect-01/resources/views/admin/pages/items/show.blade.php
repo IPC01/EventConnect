@@ -72,7 +72,7 @@
                             @endif
                         </div>
                     </div>
-                    <span class="text-lg font-bold text-purple">MZN {{ number_format($item->price, 2, ',', '.') }}</span>
+                    <span class="text-lg font-bold text-purple"> {{ number_format($item->price, 2, ',', '.') }}</span>
                         
                     <div class="flex justify-between items-center">
                         
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-6 pl-4">
+                <div class="p-6 pl-2">
                     
                       <img src="{{asset('storage/' . $item->image->url_img)}}" alt="" srcset="">
                       <p class="text-gray-600 text-sm mb-3">{{ $item->description }}</p>

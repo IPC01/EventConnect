@@ -15,8 +15,8 @@
         <div class="hidden md:flex space-x-6 mt-5">
             <a href="#" class="text-gray-700 hover:text-purple-500">Início</a>
             <a href="#" class="text-gray-700 hover:text-purple-500">Busca Avancada</a>
-            <a href="#" class="text-gray-700 hover:text-purple-500">Galeria</a>
-            <a href="#" class="text-gray-700 hover:text-purple-500">Pacotes</a>
+            <a href="{{route('shop.galery')}}" class="text-gray-700 hover:text-purple-500">Galeria</a>
+            <a href="{{route('shop.package')}}" class="text-gray-700 hover:text-purple-500">Pacotes</a>
             <a href="#" class="text-gray-700 hover:text-purple-500">Saloes de eventos</a>
         </div>
 

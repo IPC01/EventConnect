@@ -33,4 +33,8 @@ class EventPackage extends Model
     {
         return $this->hasMany(Reserve::class, 'id_package');  
     }
+    public function eventType()
+{
+    return $this->belongsTo(\App\Models\EventType::class, 'id_event_type');
+}
 }

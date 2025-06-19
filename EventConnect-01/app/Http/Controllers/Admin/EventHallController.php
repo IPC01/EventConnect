@@ -161,15 +161,15 @@ class EventHallController extends Controller
     {
      
         // Recupera o EventHall relacionado ao id_user do usuário autenticado
-        $eventHall = EventHall::where('id', $id)->firstOrFail();
+        $eventhalls = EventHall::where('id', $id)->firstOrFail();
 
         // Recupera os pacotes associados ao EventHall
-        $packages = EventPackage::where('id_event_hall', $eventHall->id)->get();
+        $packages = EventPackage::where('id_event_hall', $eventhalls->id)->get();
         $menus = Menu::all(); // Recupera todos os menus
         $decorations = Decoration::all(); // Recupera todas as decorações
-        $eventTypes = EventType::all(); // Recupera todos os tipos de evento
+        $types = EventType::all(); // Recupera todos os tipos de evento
 
-        return view('admin.pages.packages.index', compact('eventHall', 'menus', 'decorations', 'eventTypes','packages'));
+        return view('admin.pages.packages.index', compact('eventhalls', 'menus', 'decorations', 'types','packages'));
     }
 
     public function storePackage(Request $request)
