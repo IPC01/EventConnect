@@ -1608,7 +1608,77 @@ img {
             transform: translateY(-50%);
             color: var(--purple);
         }
+        .modal.hidden {
+    display: none;
+}
 
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 550px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+    position: relative;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #7e5bef, #9f7aea);
+    color: white;
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.close-btn {
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+/* Optional animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
         .filter-select {
             width: 100%;
             padding: 0.75rem 1rem 0.75rem 2.5rem;

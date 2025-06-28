@@ -46,30 +46,29 @@
                                         {{ $package->eventType->name ?? 'Tipo não definido' }}
                                     </div>
                                 </div>
-                                <div class="package-footer">
-                                    @php
-                                        $packageData = [
+                                     @php
+                                        $packageScheduleData = [
+                                            'id' => $package->id,
                                             'name' => $package->name,
                                             'eventType' => $package->eventType->name ?? '-',
-                                            'eventHall' => $package->eventHall->name ?? '-',
-                                            'menu' => $package->menu->name ?? '-',
-                                            'decoration' => $package->decoration->name ?? '-',
-                                            'eventType_price' => $package->eventType->price ?? 0,
-                                            'eventHall_price' => $package->eventHall->price ?? 0,
-                                            'menu_price' => $package->menu->price ?? 0,
-                                            'decoration_price' => $package->decoration->price ?? 0,
+                                            'price' => number_format($package->total_price, 2, ',', '.'),
                                         ];
+                                        $types = App\Models\eventType::all();
                                     @endphp
+                                <div class="package-footer">
+                               
 
-                                    <a class="details-link" href="{{route('shop.package.details')}}">
+                                    <a class="details-link"
+                                        href="{{ route('shop.package.details', ['id' => $package->id]) }}">
                                         Ver detalhes <i class="fas fa-eye"></i>
                                     </a>
 
 
+
                                     <div style="display: flex; gap: 0.5rem;">
-                                        <a href="#" class="add-btn" onclick="">
+                                        <button onclick='openScheduleModal(@json($packageScheduleData))'  class="add-btn">
                                             agendar
-                                        </a>
+                                        </button>
 
                                     </div>
                                 </div>
@@ -86,24 +85,7 @@
                 </div>
             </div>
         </div>
-        <style>
-            ::-webkit-scrollbar {
-                width: 8px;
-            }
 
-            ::-webkit-scrollbar-track {
-                background: #1f1f2e;
-            }
-
-            ::-webkit-scrollbar-thumb {
-                background: linear-gradient(45deg, #8056FF, #FF56B1);
-                border-radius: 4px;
-            }
-
-            ::-webkit-scrollbar-thumb:hover {
-                background: linear-gradient(45deg, #FF56B1, #0BC4E2);
-            }
-        </style>
 
         <body>
 

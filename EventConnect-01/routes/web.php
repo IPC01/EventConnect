@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DecorationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\ReservationsController;
 use App\Http\Controllers\Admin\PackageController;
 
 use Illuminate\Support\Facades\Route;
@@ -15,9 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ShopController::class, 'index'])->name('shop');
 Route::get('/galery', [ShopController::class, 'galery'])->name('shop.galery');
 Route::get('/package', [ShopController::class, 'package'])->name('shop.package');
-Route::get('/package/details', [ShopController::class, 'packagedetails'])->name('shop.package.details');
+Route::get('/package/{id}', [ShopController::class, 'packagedetails'])->name('shop.package.details');
 
 
+Route::middleware(['auth'])->group(function () {
+Route::resource('admin/reservations', ReservationsController::class);
+});
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard do Admin

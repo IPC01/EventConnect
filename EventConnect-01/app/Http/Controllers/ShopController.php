@@ -20,7 +20,8 @@ class ShopController extends Controller
         return view('shop.pages.packages',compact('packages'));
     }
     public function packagedetails($id){
-        $package=FindOrFail($id);
-        return view('shop.pages.packdDtails',compact('package'));
+        
+        $package=EventPackage::FindOrFail($id);
+        return view('shop.pages.packDetails',compact('package'));
     }
 }

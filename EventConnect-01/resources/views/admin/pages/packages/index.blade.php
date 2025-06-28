@@ -294,37 +294,6 @@
 
     <!-- Estilo Modal simples -->
     <style>
-        .modal.hidden {
-            display: none;
-        }
 
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 500px;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 20px;
-            cursor: pointer;
-        }
     </style>
 @endsection

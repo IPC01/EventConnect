@@ -13,7 +13,9 @@ return new class extends Migration {
             $table->foreignId('id_event_type')->constrained('event_types')->onDelete('cascade');
             $table->integer('nr_guests');
             $table->decimal('budget', 10, 2);
-            $table->date('event_date');
+            $table->date('event_start_date');
+            $table->date('event_end_date');
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

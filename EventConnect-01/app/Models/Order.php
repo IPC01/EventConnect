@@ -10,7 +10,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_user', 'nr_guests', 'budget', 'event_date'];
+    protected $fillable = ['id_user', 'nr_guests', 'budget', 'event_start_date','event_end_date','status'];
 
     public function user(): BelongsTo
     {
