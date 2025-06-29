@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($reserves as $reserve)
+                @forelse ($reserves as $reserve)
                     <tr>
                         <td>{{ $reserve->order->user->name ?? '---' }}</td>
                         <td>{{ $reserve->order->eventType->name ?? '---' }}</td>
@@ -46,7 +46,11 @@
                             @endif
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-gray-500">Nenhuma reserva encontrada.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -95,7 +99,6 @@
     function openModal(reserveId, amount) {
         document.getElementById('reserve_id').value = reserveId;
         document.getElementById('reserve_amount').value = amount;
-        document.getElementById('payment_method_group').classList.remove('hidden');
         document.getElementById('paymentModal').classList.remove('hidden');
     }
 
@@ -115,5 +118,4 @@
         }
     }
 </script>
-
 @endsection
