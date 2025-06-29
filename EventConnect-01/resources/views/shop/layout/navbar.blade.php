@@ -25,7 +25,7 @@
                 <!-- Se o usuário estiver logado -->
                 <div class="relative" id="avatarDropdownWrapper">
                     <button id="avatarButton" class="flex items-center space-x-2 focus:outline-none">
-                        <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-avatar.png') }}" alt="Avatar" class="w-10 h-10 rounded-full object-cover">
+                        <img src="{{ Auth::user()->profile_photo_url ?? asset('images/image.png') }}" alt="Avatar" class="w-10 h-10 rounded-full object-cover">
                     </button>
         
                     <!-- Dropdown -->

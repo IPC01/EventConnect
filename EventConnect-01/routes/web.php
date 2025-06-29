@@ -32,6 +32,19 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/users/{id}/edit', [AdminController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}/update', [AdminController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}/destroy', [AdminController::class, 'destroy'])->name('users.destroy');
+
+    //orders
+    Route::patch('orders/{id}/status', [ReservationsController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::delete('/orders/{order}', [OrderController::class, 'destroyorder'])->name('orders.destroy');
+
+    //reserves
+    Route::get('reserves', [ReservationsController::class, 'indexReserve'])->name('reserves.index');
+   Route::get('reserves/{id}/edit', [ReservationsController::class, 'edit'])->name('reserves.edit');
+    Route::put('reserves/{id}', [ReservationsController::class, 'update'])->name('reserves.update');
+    Route::delete('reserves/{id}', [ReservationsController::class, 'destroy'])->name('reserves.destroy');
+    Route::patch('reserves/{id}/toggle-status', [ReservationsController::class, 'toggleStatus'])->name('reserves.toggleStatus');
+
+
     
     //Event Hall
     Route::resource('hall', EventHallController::class);

@@ -10,10 +10,14 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_user', 'nr_guests', 'budget', 'event_start_date','event_end_date','status'];
+    protected $fillable = ['id_user','id_package','id_event_type','budget', 'nr_guests', 'event_start_date','event_end_date','status'];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+       public function eventType()
+    {
+        return $this->belongsTo(EventType::class, 'id_event_type');
     }
 }

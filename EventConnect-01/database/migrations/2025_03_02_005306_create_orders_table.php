@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->decimal('budget', 10, 2);
             $table->date('event_start_date');
             $table->date('event_end_date');
-            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'accepted', 'rejected','cancelled'])->default('pending');
             $table->timestamps();
         });
     }

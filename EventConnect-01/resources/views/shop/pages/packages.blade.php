@@ -51,7 +51,7 @@
                                             'id' => $package->id,
                                             'name' => $package->name,
                                             'eventType' => $package->eventType->name ?? '-',
-                                            'price' => number_format($package->total_price, 2, ',', '.'),
+                                            'price' => $package->total_price,
                                         ];
                                         $types = App\Models\eventType::all();
                                     @endphp

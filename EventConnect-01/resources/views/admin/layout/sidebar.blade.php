@@ -47,12 +47,25 @@
 
           <a href="{{ route('admin.packages.index') }}"
               class="menu-item {{ request()->routeIs('admin.packages.*') ? 'active' : '' }}">
-              <i class="fas fa-folder menu-icon"></i>
+              <i class="fas fa-box menu-icon"></i>
               <span>Pacotes</span>
           </a>
 
-            
-      {{-- <a href="#" class="menu-item">
+          <a href="{{ route('reservations.index') }}"
+              class="menu-item {{ request()->routeIs('admin.reservations.*') ? 'active' : '' }}">
+              <i class="fas fa-receipt menu-icon"></i>
+              <span>Pedidos</span>
+          </a>
+
+          <a href="{{ route('admin.reserves.index') }}"
+              class="menu-item {{ request()->routeIs('reserves.index.*') ? 'active' : '' }}">
+              <i class="fas fa-calendar-check menu-icon"></i>
+              <span>Reservas</span>
+          </a>
+
+
+
+          {{-- <a href="#" class="menu-item">
         <i class="fas fa-ticket-alt menu-icon"></i>
         <span>Ingressos</span>
       </a>
@@ -68,11 +81,11 @@
         <i class="fas fa-user-circle menu-icon"></i>
         <span>Perfil</span>
       </a> --}}
-    
-     <a href="{{route('admin.settings.index')}}" class="menu-item">
-        <i class="fas fa-cogs menu-icon"></i>
-        <span>Configurações</span>
-      </a> 
+
+          <a href="{{ route('admin.settings.index') }}" class="menu-item">
+              <i class="fas fa-cogs menu-icon"></i>
+              <span>Configurações</span>
+          </a>
       </nav>
 
   </div>
