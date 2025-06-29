@@ -13,14 +13,25 @@ use App\Http\Controllers\Admin\PackageController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [ShopController::class, 'index'])->name('shop');
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/galery', [ShopController::class, 'galery'])->name('shop.galery');
 Route::get('/package', [ShopController::class, 'package'])->name('shop.package');
 Route::get('/package/{id}', [ShopController::class, 'packagedetails'])->name('shop.package.details');
 
 
 Route::middleware(['auth'])->group(function () {
-Route::resource('admin/reservations', ReservationsController::class);
+    Route::get('/', [ShopController::class, 'index'])->name('shop');
+    Route::resource('admin/reservations', ReservationsController::class);
+    Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/senha', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+});
+Route::prefix('user/reservations')->name('user.reservations.')->group(function () {
+    Route::get('/', [ReservationsController::class, 'userReserves'])->name('index');              // List all reservations
+    Route::post('/pay', [ReservationsController::class, 'storePayment'])->name('pay');      // Store a new payment
+    Route::patch('/{id}/mark-unpaid', [ReservationsController::class, 'markAsUnpaid'])->name('mark-unpaid'); // Mark reservation as unpaid
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {

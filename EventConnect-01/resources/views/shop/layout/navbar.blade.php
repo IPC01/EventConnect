@@ -13,7 +13,7 @@
         </div>
 
         <div class="hidden md:flex space-x-6 mt-5">
-            <a href="#" class="text-gray-700 hover:text-purple-500">Início</a>
+            <a href="{{route('shop')}}" class="text-gray-700 hover:text-purple-500">Início</a>
             <a href="#" class="text-gray-700 hover:text-purple-500">Busca Avancada</a>
             <a href="{{route('shop.galery')}}" class="text-gray-700 hover:text-purple-500">Galeria</a>
             <a href="{{route('shop.package')}}" class="text-gray-700 hover:text-purple-500">Pacotes</a>
@@ -33,12 +33,15 @@
                         id="avatarDropdown" 
                         class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50 hidden"
                     >
-                        <a href="{{ route('shop') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Perfil</a>
         
                         @if(Auth::user()->is_admin )
                             <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Entrar como Admin</a>
                         @endif
-        
+                        
+                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Perfil</a>
+                        <a href="{{ route('profile.orders') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pedidos</a>
+                        <a href="{{ route('user.reservations.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Reservas</a>
+
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">

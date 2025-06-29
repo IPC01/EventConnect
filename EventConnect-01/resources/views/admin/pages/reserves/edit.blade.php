@@ -31,7 +31,7 @@
                             @foreach ($pacotes as $pacote)
                                 <option value="{{ $pacote->id }}"
                                     {{ old('id_package', $reserve->id_package) == $pacote->id ? 'selected' : '' }}>
-                                    {{ $pacote->nome }}
+                                    {{ $pacote->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -64,7 +64,7 @@
                         Cancelar
                     </a>
                     <button type="submit" class="add-btn">
-                        Atualizar Reserva
+                        Actualizar Reserva
                     </button>
                 </div>
             </form>

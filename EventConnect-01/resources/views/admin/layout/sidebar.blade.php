@@ -51,14 +51,14 @@
               <span>Pacotes</span>
           </a>
 
-          <a href="{{ route('reservations.index') }}"
+          <a href="{{ route('user.reservations.index') }}"
               class="menu-item {{ request()->routeIs('admin.reservations.*') ? 'active' : '' }}">
               <i class="fas fa-receipt menu-icon"></i>
               <span>Pedidos</span>
           </a>
 
           <a href="{{ route('admin.reserves.index') }}"
-              class="menu-item {{ request()->routeIs('reserves.index.*') ? 'active' : '' }}">
+              class="menu-item {{ request()->routeIs('admin.reserves.*') ? 'active' : '' }}">
               <i class="fas fa-calendar-check menu-icon"></i>
               <span>Reservas</span>
           </a>
