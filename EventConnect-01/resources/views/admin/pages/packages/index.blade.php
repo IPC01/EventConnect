@@ -119,10 +119,9 @@
                                         ];
                                     @endphp
 
-                                    <button class="details-link"
-                                        onclick='openViewPackageModal(@json($packageData))'>
+                                    <a href="{{ route('shop.package.details', ['id' => $package->id]) }}" class="details-link">
                                         Ver detalhes <i class="fas fa-eye"></i>
-                                    </button>
+                                    </a>
 
 
                                     <div style="display: flex; gap: 0.5rem;">
