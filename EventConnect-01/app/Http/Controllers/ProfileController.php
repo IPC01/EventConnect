@@ -71,7 +71,7 @@ public function updatePassword(Request $request)
 
       $orders = Order::where('id_user', Auth::id())->get();
 
-      return view('admin.pages.orders.index', compact('orders'));
+      return view('user.pages.orders', compact('orders'));
    }
 public function destroy()
 {

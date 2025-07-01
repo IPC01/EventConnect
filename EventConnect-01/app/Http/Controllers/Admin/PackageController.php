@@ -42,6 +42,69 @@ class PackageController extends Controller
         //
     }
 
+
+
+public function search(Request $request)
+{
+    $request->validate([
+        'start_date'   => 'required|date',
+        'end_date'     => 'required|date|after_or_equal:start_date',
+        'guests'       => 'required|integer|min:1',
+        'budget'       => 'required|numeric|min:0',
+        'event_type'   => 'required|exists:event_types,id',
+        'description'  => 'nullable|string',
+    ]);
+
+    $guests = $request->guests;
+    $budget = $request->budget;
+    $start = $request->start_date;
+    $end = $request->end_date;
+    $desc = trim($request->description);
+
+    $days = \Carbon\Carbon::parse($start)->diffInDays(\Carbon\Carbon::parse($end)) + 1;
+    $maxPerPackage = $budget / ($guests * $days);
+
+    $packages = EventPackage::with(['menu.items', 'eventHall', 'decoration'])
+        ->where('id_event_type', $request->event_type)
+        ->where('total_price', '<=', $maxPerPackage)
+
+        // Filtro de disponibilidade
+        ->whereDoesntHave('reserves', function ($query) use ($start, $end) {
+            $query->whereHas('order', function ($q) use ($start, $end) {
+                $q->whereBetween('event_start_date', [$start, $end])
+                  ->orWhereBetween('event_end_date', [$start, $end])
+                  ->orWhere(function ($q2) use ($start, $end) {
+                      $q2->where('event_start_date', '<=', $start)
+                         ->where('event_end_date', '>=', $end);
+                  });
+            });
+        })
+
+        // ->when($desc !== '', function ($query) use ($desc) {
+        //     // Isso serve como filtro adicional leve
+        //     $query->where(function ($q) use ($desc) {
+        //         $q->whereHas('menu', function ($menuQuery) use ($desc) {
+        //             $menuQuery->where('name', 'like', "%$desc%")
+        //                       ->orWhereHas('items', function ($itemQuery) use ($desc) {
+        //                           $itemQuery->where('name', 'like', "%$desc%")
+        //                                     ->orWhere('description', 'like', "%$desc%");
+        //                       });
+        //         });
+        //         // Os filtros abaixo são secundários e não obrigatórios
+        //         $q->orWhereHas('decoration', fn($q2) =>
+        //             $q2->where('description', 'like', "%$desc%"));
+
+        //         $q->orWhereHas('eventHall', fn($q2) =>
+        //             $q2->where('description', 'like', "%$desc%"));
+        //     });
+        // })
+
+        ->get();
+
+    return view('shop.pages.packages', compact('packages'));
+}
+
+
     /**
      * Store a newly created resource in storage.
      */

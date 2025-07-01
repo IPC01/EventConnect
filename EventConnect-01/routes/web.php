@@ -13,19 +13,19 @@ use App\Http\Controllers\Admin\PackageController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/', [ShopController::class, 'index'])->name('shop');
 Route::get('/galery', [ShopController::class, 'galery'])->name('shop.galery');
 Route::get('/package', [ShopController::class, 'package'])->name('shop.package');
 Route::get('/package/{id}', [ShopController::class, 'packagedetails'])->name('shop.package.details');
+Route::get('/search', [PackageController::class, 'search'])->name('search');
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [ShopController::class, 'index'])->name('shop');
     Route::resource('admin/reservations', ReservationsController::class);
-    Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/senha', [ProfileController::class, 'updatePassword'])->name('profile.password');
-    Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/orders', [ProfileController::class, 'orders'])->name('profile.orders');
 });
 Route::prefix('user/reservations')->name('user.reservations.')->group(function () {

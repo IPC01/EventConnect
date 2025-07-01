@@ -29,10 +29,11 @@ class EventPackage extends Model
         return $this->belongsTo(Decoration::class, 'id_decoration');
     }
 
-    public function reservations(): HasMany
-    {
-        return $this->hasMany(Reserve::class, 'id_package');  
-    }
+   public function reserves()
+{
+    return $this->hasMany(Reserve::class, 'id_package');
+}
+
     public function eventType()
 {
     return $this->belongsTo(\App\Models\EventType::class, 'id_event_type');

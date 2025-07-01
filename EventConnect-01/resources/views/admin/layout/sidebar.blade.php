@@ -51,7 +51,7 @@
               <span>Pacotes</span>
           </a>
 
-          <a href="{{ route('user.reservations.index') }}"
+          <a href="{{ route('reservations.index') }}"
               class="menu-item {{ request()->routeIs('admin.reservations.*') ? 'active' : '' }}">
               <i class="fas fa-receipt menu-icon"></i>
               <span>Pedidos</span>
