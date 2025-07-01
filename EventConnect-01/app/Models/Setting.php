@@ -14,6 +14,7 @@ class Setting extends Model
         'cancel_end_fee', 
         'late_pct', 
         'on_time_pct', 
-        'base_time'
+        'base_time',
+        'pct_payment'
     ];
 }

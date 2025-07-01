@@ -153,6 +153,10 @@ body {
   background-color: var(--white);
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
   z-index: 10;
+ 
+    overflow-y: auto;
+    max-height: 100vh;
+
 }
 
 .logo-area {

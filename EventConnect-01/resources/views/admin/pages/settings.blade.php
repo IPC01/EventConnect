@@ -35,6 +35,14 @@
                             class="w-full border-gray-300 focus:ring-cyan-500 focus:border-cyan-500 rounded-md shadow-sm p-3">
                     </div>
                 </div>
+                <div>
+                    <h3 class="text-lg font-medium text-gray-700 mb-4">Taxa de Desconto de reserva</h3>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Taxa de Desconto de reserva (%) <span class="text-red-500">*</span></label>
+                        <input type="number" name="pct_payment" value="{{ old('cancel_end_fee', isset($settings) ? $settings->pct_payment : '') }}" required min="0"
+                            class="w-full border-gray-300 focus:ring-cyan-500 focus:border-cyan-500 rounded-md shadow-sm p-3">
+                    </div>
+                </div>
 
                 <!-- Percentual de Atraso -->
                 <div>

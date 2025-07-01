@@ -27,6 +27,7 @@ class SettingController extends Controller
                 'late_pct' => 'required|numeric|min:0|max:100',
                 'on_time_pct' => 'required|numeric|min:0|max:100',
                 'base_time' => 'required|integer|min:1',
+                'pct_payment' => 'required|integer|min:1',
             ]);
     
             // Verifica se já existe uma configuração
@@ -71,6 +72,7 @@ class SettingController extends Controller
                 'late_pct' => 'sometimes|numeric|min:0|max:100',
                 'on_time_pct' => 'sometimes|numeric|min:0|max:100',
                 'base_time' => 'sometimes|integer|min:1',
+                'pct_payment' => 'sometimes|integer|min:1',
             ]);
 
             $eventSetting = Setting::findOrFail($id);
@@ -82,6 +84,12 @@ class SettingController extends Controller
         } catch (Exception $e) {
             return response()->json(['error' => 'Registro não encontrado'], 404);
         }
+    }
+    public function contract()
+    {
+                $settings=Setting::first();
+
+     return view('shop.pages.contract',compact('settings'));
     }
 
     // Deletar um registro

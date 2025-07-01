@@ -20,6 +20,9 @@ Route::get('/package', [ShopController::class, 'package'])->name('shop.package')
 Route::get('/package/{id}', [ShopController::class, 'packagedetails'])->name('shop.package.details');
 Route::get('/search', [PackageController::class, 'search'])->name('search');
 
+Route::get('/contract', [SettingController::class, 'contract'])->name('contract');
+
+
 Route::resource('contacts', ContactController::class);
 
 
