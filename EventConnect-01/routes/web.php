@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard do Admin
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/user', [AdminController::class, 'indexUserDashboard'])->name('dashboard.user');
     Route::get('/users/index', [AdminController::class, 'users'])->name('users.index');
     Route::get('/users/create', [AdminController::class, 'create'])->name('users.create');
     Route::post('/users/store', [AdminController::class, 'store'])->name('users.store');

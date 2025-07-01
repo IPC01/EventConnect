@@ -26,6 +26,11 @@
               <span>Mensagens</span>
           </a>
 
+          <a href="{{ route('admin.dashboard.user') }}"
+              class="menu-item {{ request()->routeIs('admin.dashboard.user.*') ? 'active' : '' }}">
+              <i class="fas fa-building menu-icon"></i>
+              <span>Relatorio</span>
+          </a>
           <a href="{{ route('admin.hall.index') }}"
               class="menu-item {{ request()->routeIs('admin.hall.*') ? 'active' : '' }}">
               <i class="fas fa-building menu-icon"></i>
