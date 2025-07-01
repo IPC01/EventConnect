@@ -23,9 +23,9 @@ class AdminController extends Controller
 {
     // Contadores de usuários
     $totalUsers = User::count();
-    $totalClients = User::where('id_role', 'client')->count();
-    $totalCollaborators = User::where('id_role', 'collaborator')->count();
-    $totalAdmins = User::where('id_role', 'admin')->count();
+    $totalClients = User::where('id_role', 3)->count();
+    $totalCollaborators = User::where('id_role', 2)->count();
+    $totalAdmins = User::where('id_role', 1)->count();
     
     // Estatísticas de pedidos
     $totalOrders = Order::count();
