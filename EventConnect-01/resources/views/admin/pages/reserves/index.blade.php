@@ -20,7 +20,7 @@
                         <th>ID Pacote</th>
                         <th>Preço Total</th>
                         <th>Status Pagamento</th>
-                        <th>Ações</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                             <td>{{ ucfirst($reserve->status_pagamento) }}</td>
                             <td>
                                 <!-- Exemplo: ações como editar ou excluir -->
-                                <a href="{{ route('admin.reserves.edit', $reserve->id) }}" class="action-btn edit-btn">
+                                {{-- <a href="{{ route('admin.reserves.edit', $reserve->id) }}" class="action-btn edit-btn">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form action="{{ route('admin.reserves.destroy', $reserve->id) }}" method="POST" class="inline-block">
@@ -42,7 +42,7 @@
                                     <button type="submit" class="action-btn delete-btn" onclick="return confirm('Deseja realmente excluir esta reserva?')">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
-                                </form>
+                                </form> --}}
                             </td>
                         </tr>
                     @endforeach

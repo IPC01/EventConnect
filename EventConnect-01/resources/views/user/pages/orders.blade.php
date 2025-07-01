@@ -116,7 +116,6 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orçamento</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Mensagens</th>
-                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -219,28 +218,7 @@
                             </td>
 
                             <!-- Ações -->
-                            <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <button onclick="viewOrderDetails({{ $order->id }})" 
-                                            title="Ver detalhes"
-                                            class="inline-flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
-                                        <i class="fas fa-eye text-gray-600"></i>
-                                    </button>
-                                    
-                                    <form action="{{ route('admin.orders.destroy', $order->id) }}" 
-                                          method="POST"
-                                          onsubmit="return confirm('Tem certeza que deseja excluir este pedido? Esta ação não pode ser desfeita.')"
-                                          class="inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                title="Excluir pedido"
-                                                class="inline-flex items-center justify-center w-8 h-8 bg-red-100 rounded-full hover:bg-red-200 transition-colors">
-                                            <i class="fas fa-trash text-red-600"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
+                          
                         </tr>
                     @empty
                         <tr>

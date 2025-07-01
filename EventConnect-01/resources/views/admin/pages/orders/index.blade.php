@@ -70,7 +70,7 @@
                             <th>Orçamento</th>
                             <th>Status</th>
                             <th>Mensagens</th>
-                            <th>Ações</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
@@ -124,14 +124,14 @@
                                     {{-- <a href="{{ route('admin.orders.show', $order->id) }}" class="action-btn view-btn">
                                     <i class="fas fa-eye"></i>
                                 </a> --}}
-                                    <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST"
+                                    {{-- <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST"
                                         onsubmit="return confirm('Deseja excluir este pedido?');">
                                         @csrf
                                         @method('DELETE')
                                         <button class="action-btn delete-btn">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach

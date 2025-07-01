@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Reserve;
 use App\Models\EventPackage;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
-
 
 class ReservationsController extends Controller
 {
@@ -17,17 +17,18 @@ class ReservationsController extends Controller
         $orders = Order::all();
         return view('admin.pages.orders.index', compact('orders'));
     }
+
     public function userReserves()
     {
-        $userId = Auth::id(); // ID do usuário autenticado
+        $userId = Auth::id();
 
-    $reserves = Reserve::whereHas('order', function ($query) use ($userId) {
-        $query->where('id_user', $userId);
-    })
-    ->with(['order', 'eventpackage']) // carrega relacionamentos
-    ->get();
+        $reserves = Reserve::whereHas('order', function ($query) use ($userId) {
+            $query->where('id_user', $userId);
+        })
+        ->with(['order', 'eventpackage'])
+        ->get();
 
-    return view('user.pages.reserves', compact('reserves'));
+        return view('user.pages.reserves', compact('reserves'));
     }
 
     public function store(Request $request)
@@ -103,81 +104,85 @@ class ReservationsController extends Controller
         return back()->with('success', 'Status atualizado com sucesso!');
     }
 
-    public function indexReserve(){
-        $reserves=Reserve::all();
-        return view('admin.pages.reserves.index',compact('reserves'));
+    public function indexReserve()
+    {
+        $reserves = Reserve::all();
+        return view('admin.pages.reserves.index', compact('reserves'));
     }
+
     public function destroy($id)
-{
-    $reserve = Reserve::findOrFail($id);
-    $reserve->delete();
+    {
+        $reserve = Reserve::findOrFail($id);
+        $reserve->delete();
 
-    return redirect()->route('admin.reserves.index')
-                     ->with('success', 'Reserva excluída com sucesso!');
-}
-public function edit($id)
-{
-    $reserve = Reserve::findOrFail($id);
-    $pacotes=EventPackage::all();
-    return view('admin.pages.reserves.edit', compact('reserve','pacotes'));
-}
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'id_order' => 'required|integer',
-        'id_package' => 'required|integer',
-        'total_price' => 'required|numeric',
-        'status_pagamento' => 'required|string',
-    ]);
+        return redirect()->route('admin.reserves.index')
+                         ->with('success', 'Reserva excluída com sucesso!');
+    }
 
-    $reserve = Reserve::findOrFail($id);
-    $reserve->update($request->only(['id_order', 'id_package', 'total_price', 'status_pagamento']));
+    public function edit($id)
+    {
+        $reserve = Reserve::findOrFail($id);
+        $pacotes = EventPackage::all();
+        return view('admin.pages.reserves.edit', compact('reserve', 'pacotes'));
+    }
 
-    return redirect()->route('admin.reserves.index')
-                     ->with('success', 'Reserva atualizada com sucesso!');
-}
-public function toggleStatus($id)
-{
-    $reserve = Reserve::findOrFail($id);
-
-    $reserve->status_pagamento = $reserve->status_pagamento === 'pago' ? 'pendente' : 'pago';
-    $reserve->save();
-
-    return redirect()->route('admin.reserves.index')
-                     ->with('success', 'Status de pagamento alterado com sucesso!');
-}
-
-
-public function storePayment(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'phone' => 'required|regex:/^(84|85)\d{7}$/',
-            'payment_method' => 'required|string',
+            'id_order' => 'required|integer',
+            'id_package' => 'required|integer',
+            'total_price' => 'required|numeric',
+            'status_pagamento' => 'required|string',
+        ]);
+
+        $reserve = Reserve::findOrFail($id);
+        $reserve->update($request->only(['id_order', 'id_package', 'total_price', 'status_pagamento']));
+
+        return redirect()->route('admin.reserves.index')
+                         ->with('success', 'Reserva atualizada com sucesso!');
+    }
+
+    public function toggleStatus($id)
+    {
+        $reserve = Reserve::findOrFail($id);
+
+        $reserve->status_pagamento = $reserve->status_pagamento === 'pago' ? 'pendente' : 'pago';
+        $reserve->save();
+
+        return redirect()->route('admin.reserves.index')
+                         ->with('success', 'Status de pagamento alterado com sucesso!');
+    }
+
+    public function storePayment(Request $request)
+    {
+        $validatedData = $request->validate([
+            'phone' => 'required',
+            'owner_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'method' => 'required|string',
             'reserve_id' => 'required|exists:reserves,id',
             'amount' => 'required|numeric',
         ]);
 
-        $reservation = Reserve::findOrFail($request->reserve_id);
-        $reservation->status_pagamento = 'pago';
-        $reservation->save();
+        try {
+            $payment = Payment::create([
+                'phone' => $validatedData['phone'],
+                'owner_id' => $validatedData['owner_id'],
+                'user_id' => $validatedData['user_id'],
+                'method' => $validatedData['method'],
+                'reserve' => $validatedData['reserve_id'],
+                'amount' => $validatedData['amount'],
+            ]);
 
-        Payment::create([
-            'reserve_id' => $reservation->id,
-            'user_id' => $reservation->order->user_id,
-            'phone' => $request->phone,
-            'payment_method' => $request->payment_method,
-            'amount' => $request->amount,
-            'reference' => $request->reference,
-        ]);
+            $reservation = Reserve::findOrFail($validatedData['reserve_id']);
+            $reservation->status_pagamento = 'pago';
+            $reservation->save();
 
-        return redirect()->route('user.reservations.index')
-                         ->with('success', 'Payment registered successfully.');
-    }    public function markAsUnpaid($id)
-    {
-        $reservation = Reserve::findOrFail($id);
-        $reservation->status_pagamento = 'pendente';
-        $reservation->save();
-
-        return response()->json(['message' => 'Reservation marked as unpaid.']);
+            return redirect()->route('user.reservations.index')
+                             ->with('success', 'Pagamento registrado com sucesso.');
+        } catch (\Exception $e) {
+            \Log::error('Erro ao registrar pagamento: ' . $e->getMessage());
+            return redirect()->back()->withErrors('Erro ao registrar o pagamento. Tente novamente.');
+        }
     }
 }

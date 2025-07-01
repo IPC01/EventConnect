@@ -20,6 +20,11 @@
               <i class="fas fa-users menu-icon"></i>
               <span>Usuários</span>
           </a>
+          <a href="{{ route('contacts.index') }}"
+              class="menu-item {{ request()->routeIs('contact.*') ? 'active' : '' }}">
+              <i class="fas fa-users menu-icon"></i>
+              <span>Mensagens</span>
+          </a>
 
           <a href="{{ route('admin.hall.index') }}"
               class="menu-item {{ request()->routeIs('admin.hall.*') ? 'active' : '' }}">
@@ -61,6 +66,11 @@
               class="menu-item {{ request()->routeIs('admin.reserves.*') ? 'active' : '' }}">
               <i class="fas fa-calendar-check menu-icon"></i>
               <span>Reservas</span>
+          </a>
+          <a href="{{ route('admin.payment.index') }}"
+              class="menu-item {{ request()->routeIs('admin.payment.*') ? 'active' : '' }}">
+              <i class="fas fa-calendar-check menu-icon"></i>
+              <span>Pagamentos</span>
           </a>
 
 

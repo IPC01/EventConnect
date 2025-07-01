@@ -16,6 +16,7 @@
             <a href="{{route('shop')}}" class="text-gray-700 hover:text-purple-500">Início</a>
             <a href="{{route('shop.galery')}}" class="text-gray-700 hover:text-purple-500">Galeria</a>
             <a href="{{route('shop.package')}}" class="text-gray-700 hover:text-purple-500">Pacotes</a>
+            <a href="{{route('contacts.create')}}" class="text-gray-700 hover:text-purple-500">Contacte-nos</a>
         </div>
 
         <div class="flex items-center space-x-4">
